@@ -7,6 +7,7 @@ __pycache__
 *.png
 *.npy
 extractor-tf.py
+static/
 
 # Jupyter Notebook
 .ipynb_checkpoints

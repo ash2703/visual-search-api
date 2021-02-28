@@ -31,7 +31,7 @@ try:
     img_paths = list(sorted(IMG_PATH.glob("*")))
     for feature_path in sorted(FEATURE_PATH.glob("*.npy")):
         features.append(np.load(feature_path))
-        
+
     features = np.array(features)
     logger.info(f"model and feature databse loaded with {features.shape[0]} features")
 except Exception as e:
@@ -56,6 +56,7 @@ async def create_upload_file(query_image: UploadFile = File(...)):
     dists = np.linalg.norm(features - img_feats, axis = 1)
     ids = np.argsort(dists)[:5]
     match_img_paths = [img_paths[id] for id in ids]
+    logger.info(f"{str(match_img_paths)}")
     response = stack_images_side_by_side(QUERY_PATH, match_img_paths)
 
     _, encoded_img = cv2.imencode('.PNG', response)

@@ -18,3 +18,4 @@ watchgod==0.6
 webencodings==0.5.1
 websockets==8.1
 wheel==0.34.2
+dvc[s3]
