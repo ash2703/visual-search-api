@@ -1,0 +1,4 @@
+[core]
+    remote = vs-static
+['remote "vs-static"']
+    url = s3://aml-aayush/
