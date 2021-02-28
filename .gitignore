@@ -1,8 +1,12 @@
-static/
 __pycache__
 *.pyc
 *.pt
 *.pth
+*.jpg
+*.jpeg
+*.png
+*.npy
+extractor-tf.py
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -141,3 +145,4 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
