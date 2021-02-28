@@ -1,0 +1,20 @@
+aiofiles==0.6.0
+fastapi==0.63.0
+httptools==0.1.1
+matplotlib==3.3.3
+networkx==2.5
+opencv-python-headless==4.5.1.48
+scikit-learn==0.24.1
+python-dotenv==0.15.0
+python-multipart==0.0.5
+scipy==1.5.4
+-f https://download.pytorch.org/whl/torch_stable.html
+torch==1.7.1+cpu
+torchvision==0.8.2+cpu
+tqdm==4.58.0
+uvicorn==0.13.3
+uvloop==0.14.0
+watchgod==0.6
+webencodings==0.5.1
+websockets==8.1
+wheel==0.34.2
