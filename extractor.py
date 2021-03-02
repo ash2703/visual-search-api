@@ -29,3 +29,7 @@ class FeatureExtractor:
         with torch.no_grad():
             feature = self.model(batch_t)[0]
         return feature / np.linalg.norm(feature)
+
+if __name__ == "__main__":
+    fe = FeatureExtractor()
+    print("new model:\n", fe.model)

@@ -14,6 +14,7 @@ from pathlib import Path
 import logging
 
 from extractor import FeatureExtractor
+from search import FSearch
 from utils import *
 
 logging.basicConfig(level=logging.INFO)
@@ -27,15 +28,9 @@ FEATURE_PATH = Path("./static/features")
 
 try:
     fe=FeatureExtractor()
-    features = []
-    img_paths = list(sorted(IMG_PATH.glob("*")))
-    for feature_path in sorted(FEATURE_PATH.glob("*.npy")):
-        features.append(np.load(feature_path))
-
-    features = np.array(features)
-    logger.info(f"model and feature databse loaded with {features.shape[0]} features")
+    fs = FSearch(FEATURE_PATH, IMG_PATH)
+    logger.info(f"model and feature databse loaded")
 except Exception as e:
-    print(e)
     logger.info("Exception occurred", exc_info=True)
 
 
@@ -52,10 +47,10 @@ async def create_upload_file(query_image: UploadFile = File(...)):
         contents = await query_image.read()
         myfile.write(contents)
 
-    img_feats = fe.extract(QUERY_PATH).numpy()
-    dists = np.linalg.norm(features - img_feats, axis = 1)
-    ids = np.argsort(dists)[:5]
-    match_img_paths = [img_paths[id] for id in ids]
+    img_feats = fe.extract(QUERY_PATH).numpy().reshape(1, -1)
+    _, ids = fs.query(img_feats)
+    
+    match_img_paths = [fs.img_paths[id] for id in ids[0]]  #single query hence extract 1st index
     logger.info(f"{str(match_img_paths)}")
     response = stack_images_side_by_side(QUERY_PATH, match_img_paths)
 
