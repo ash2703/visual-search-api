@@ -13,9 +13,9 @@ from pathlib import Path
 
 import logging
 
-from extractor import FeatureExtractor
-from search import FSearch
-from utils import *
+from src.extractor import FeatureExtractor
+from src.search import FSearch
+from src.utils import *
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

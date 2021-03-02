@@ -46,7 +46,7 @@ class FSearch:
 
 
 if __name__ == "__main__":
-    from extractor import FeatureExtractor
+    from src.extractor import FeatureExtractor
 
     IMG_PATH = Path("./static/imgs")
     FEATURE_PATH = Path("./static/features")

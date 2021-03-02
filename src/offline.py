@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 from sklearn.metrics.pairwise import cosine_similarity,cosine_distances
 from tqdm import tqdm
-from extractor import FeatureExtractor
+from src.extractor import FeatureExtractor
 
 IMG_PATH = Path("./static/imgs")
 FEATURE_PATH = Path("./static/features")
