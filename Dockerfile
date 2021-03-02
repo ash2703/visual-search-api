@@ -1,7 +1,7 @@
 FROM python:3.6-slim
 LABEL maintainer="Aayush Singh <aayushsingh@gofynd.com>"
 
-RUN apt update && apt install -y git
+RUN apt update && apt install -y git libomp-dev
 
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
