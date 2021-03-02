@@ -18,4 +18,4 @@ RUN dvc remote modify vs-static access_key_id ${AWS_ACCESS_KEY_ID}
 RUN dvc remote modify vs-static secret_access_key ${AWS_SECRET_ACCESS_KEY}
 RUN dvc pull
 
-CMD uvicorn server:app --host 0.0.0.0 --port 8000
+CMD uvicorn src.server:app --host 0.0.0.0 --port 8000
