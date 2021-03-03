@@ -23,7 +23,7 @@ class FeatureExtractor:
 
     def extract(self, img_path: Path):
         assert isinstance(img_path, Path)
-        img = Image.open(img_path)
+        img = Image.open(img_path).convert("RGB")
         img_t = self.transform(img)
         batch_t = torch.unsqueeze(img_t, 0)
         with torch.no_grad():

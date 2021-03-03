@@ -15,10 +15,12 @@ class FSearch:
     
     def load_index(self):
         index = faiss.IndexFlatL2(self.d)   # build the index
+        self.feat_paths = []
         for feature_path in sorted(self.feat_path.glob("*.npy")):
+            self.feat_paths.append(feature_path)
             index.add(np.load(feature_path).reshape(1,-1))     # add vectors to the index
 
-        assert index.ntotal == len(self.img_paths) - 1, "Index not created" # -1 for an extra .keep file
+        assert index.ntotal == len(self.img_paths) , "Index features and total images size does not match" # -1 for an extra .keep file
         return index
     
     def query(self, query, top_k = 5):
@@ -41,20 +43,29 @@ class FSearch:
         assert index.is_trained
         index.add(data)
         index.nprobe = 2  #how many clusters needed in result
-        assert index.ntotal == len(self.img_paths) - 1, "Index not created" # -1 for an extra .keep file
+        assert index.ntotal == len(self.img_paths) , "Index features and total images size does not match" # -1 for an extra .keep file
+
         return index
 
 
 if __name__ == "__main__":
-    from src.extractor import FeatureExtractor
+    import cv2
+    
+    from extractor import FeatureExtractor
+    from utils import *
 
-    IMG_PATH = Path("./static/imgs")
-    FEATURE_PATH = Path("./static/features")
-    QUERY_PATH = Path("./static/uploaded/5549f026.jpg")
+    IMG_PATH = Path("../static/imgs")
+    FEATURE_PATH = Path("../static/features")
+    QUERY_PATH = Path("../static/imgs/5ab96e94cd72e62700584a06_rmr-blog-bird-oasis.jpg")
 
     fe=FeatureExtractor()
     img_feats = fe.extract(QUERY_PATH).numpy().reshape(1, -1)
 
-    fs = FSearch(FEATURE_PATH, IMG_PATH)
-    response = fs.query(img_feats)
-    print(response)
+    fs = FSearch(FEATURE_PATH, IMG_PATH, debug=True)
+    D, response = fs.query(img_feats, 10)
+    match_img_paths = [fs.img_paths[id] for id in response[0]]
+    response = stack_images_side_by_side(QUERY_PATH, match_img_paths)
+    print(D)
+    cv2.imshow("response", response)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
