@@ -20,3 +20,4 @@ websockets==8.1
 wheel==0.34.2
 dvc[s3]
 faiss-cpu==1.7.0
+streamlit==0.77.0

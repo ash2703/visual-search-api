@@ -4,36 +4,44 @@ import requests
 import streamlit as st
 from pathlib import Path
 
+##### TODO: CONFIGS
+URL_ENDPOINT = 'http://127.0.0.1:8000/uploadfile/'   # TODO add live ping
+
+QUERY_PATH_DIR = Path("ui/upload/") 
+RESPONSE_PATH = Path("ui/response/") 
+
+os.makedirs(str(QUERY_PATH_DIR), exist_ok = True)
+os.makedirs(str(RESPONSE_PATH), exist_ok = True)
+#####
+
 st.set_page_config(layout='centered')
 st.title("Visual Search API")
+
 uploaded_file = st.file_uploader("Choose a file", type = ["png", "jpg", "jpeg"])
 
-assert uploaded_file is not None
+assert uploaded_file is not None, "File upload error"
 
-QUERY_PATH = Path("./upload/") / uploaded_file.name 
-RESPONSE_PATH = Path("./response/") 
+ID = uploaded_file.id
+FILE_TYPE = uploaded_file.type.split("/")[-1]
+FILE_PATH = QUERY_PATH_DIR / Path(ID + "." + FILE_TYPE)
 
-URL_ENDPOINT = 'http://127.0.0.1:8000/uploadfile/'
-
-os.makedirs("./upload/", exist_ok = True)
-os.makedirs("./response/", exist_ok = True)
-
-with open(str(QUERY_PATH), 'wb') as myfile:
+with open(str(FILE_PATH), 'wb') as myfile:
     contents = uploaded_file.getvalue()    # To read file as bytes:
     myfile.write(contents)
 
 st.image(contents, caption = "uploaded query image")
 
 files = {
-        "query_image": (QUERY_PATH.name,
-                open(QUERY_PATH, 'rb'),
-                "image/png"),
+        "query_image": (FILE_PATH.name,
+                open(FILE_PATH, 'rb'),
+                f"image/{FILE_TYPE}"),
 }
 
 response = requests.post(URL_ENDPOINT, files=files)
 
 if response.status_code == 200:
-    with open(str(RESPONSE_PATH / "out.png"), 'wb') as f:
+    # TODO: Save file by chunking
+    with open(str(RESPONSE_PATH / Path(f"{ID}_result.{FILE_TYPE}")), 'wb') as f:
         f.write(response.content)
 
 st.image(response.content, caption = "Closest matching images")
