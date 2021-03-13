@@ -6,6 +6,7 @@ __pycache__
 *.jpeg
 *.png
 *.npy
+*.ckpt
 extractor-tf.py
 
 # Jupyter Notebook

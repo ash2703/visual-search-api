@@ -1,4 +1,4 @@
 [core]
-    remote = vs-static
-['remote "vs-static"']
-    url = s3://aml-aayush/
+    remote = ash-dev
+['remote "ash-dev"']
+    url = s3://visual-search-db/
