@@ -5,4 +5,4 @@ phases:
       python: 3.8
   pre_build:
     commands:
-      - python src/app_test.py
+      - python src/test.py
