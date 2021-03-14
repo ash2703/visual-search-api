@@ -13,8 +13,8 @@ from pathlib import Path
 
 import logging
 
-from src.extractor import FeatureExtractor
-from src.search import FSearch
+# from src.extractor import FeatureExtractor
+# from src.search import FSearch
 from src.utils import *
 
 logging.basicConfig(level=logging.INFO)
@@ -26,12 +26,12 @@ app = FastAPI()
 IMG_PATH = Path("./static/imgs")
 FEATURE_PATH = Path("./static/features")
 
-try:
-    fe=FeatureExtractor()
-    fs = FSearch(FEATURE_PATH, IMG_PATH)
-    logger.info(f"model and feature databse loaded")
-except Exception as e:
-    logger.info("Exception occurred", exc_info=True)
+# try:
+#     fe=FeatureExtractor()
+#     fs = FSearch(FEATURE_PATH, IMG_PATH)
+#     logger.info(f"model and feature databse loaded")
+# except Exception as e:
+#     logger.info("Exception occurred", exc_info=True)
 
 
 @app.post("/uploadfile/")
@@ -47,12 +47,12 @@ async def create_upload_file(query_image: UploadFile = File(...)):
         contents = await query_image.read()
         myfile.write(contents)
 
-    img_feats = fe.extract(QUERY_PATH).numpy().reshape(1, -1)
-    _, ids = fs.query(img_feats)
+    # img_feats = fe.extract(QUERY_PATH).numpy().reshape(1, -1)
+    # _, ids = fs.query(img_feats)
     
-    match_img_paths = [fs.img_paths[id] for id in ids[0]]  #single query hence extract 1st index
-    logger.info(f"{str(match_img_paths)}")
-    response = stack_images_side_by_side(QUERY_PATH, match_img_paths)
+    # match_img_paths = [fs.img_paths[id] for id in ids[0]]  #single query hence extract 1st index
+    # logger.info(f"{str(match_img_paths)}")
+    response = stack_images_side_by_side(QUERY_PATH, [QUERY_PATH,QUERY_PATH,QUERY_PATH])
 
     _, encoded_img = cv2.imencode('.PNG', response)
     logger.info("succesfully encoded, now streaming")
