@@ -1,0 +1,1 @@
+from .extractor_byol import FeatureExtractor
