@@ -29,7 +29,7 @@ FEATURE_PATH = config.FEATURE_PATH
 
 try:
     fe=FeatureExtractor()
-    fs = FSearch(FEATURE_PATH, IMG_PATH)
+    fs = FSearch(FEATURE_PATH, IMG_PATH, d = config.FEATURE_DIM)
     logger.info(f"model and feature databse loaded")
 except Exception as e:
     logger.info("Exception occurred", exc_info=True)
@@ -53,7 +53,7 @@ async def create_upload_file(query_image: UploadFile = File(...)):
     
     match_img_paths = [fs.img_paths[id] for id in ids[0]]  #single query hence extract 1st index
     logger.info(f"{str(match_img_paths)}")
-    response = stack_images_side_by_side(QUERY_PATH, [QUERY_PATH,QUERY_PATH,QUERY_PATH])
+    response = stack_images_side_by_side(QUERY_PATH, match_img_paths)
 
     _, encoded_img = cv2.imencode('.PNG', response)
     logger.info("succesfully encoded, now streaming")

@@ -8,4 +8,5 @@ class DefaultConfig:
         self.IMG_PATH = Path(f"{cwd}/fashion_data/images")
         self.FEATURE_PATH = Path(f"{cwd}/fashion_data/features")
         self.IMAGE_EXTS = ['.jpg', '.png', '.jpeg']
+        self.FEATURE_DIM = 2048
 
