@@ -16,6 +16,7 @@ import logging
 from src.features import FeatureExtractor
 from src.search import FSearch
 from src.utils import *
+from src.configs import config
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -23,8 +24,8 @@ logger = logging.getLogger(__name__)
 logger.info('Starting server')
 app = FastAPI()
 
-IMG_PATH = Path("./static/imgs")
-FEATURE_PATH = Path("./static/features")
+IMG_PATH = config.IMG_PATH
+FEATURE_PATH = config.FEATURE_PATH
 
 try:
     fe=FeatureExtractor()

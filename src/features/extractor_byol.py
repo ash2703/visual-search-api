@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from torchvision import models, transforms
 
-from ..models import BYOL, SelfSupervisedLearner
+from src.models import BYOL, SelfSupervisedLearner
 
 
 class FeatureExtractor:
