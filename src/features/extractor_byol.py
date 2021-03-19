@@ -9,9 +9,9 @@ from src.models import BYOL, SelfSupervisedLearner
 
 
 class FeatureExtractor:
-    def __init__(self):
+    def __init__(self, weight_path):
         IMAGE_SIZE = 256
-        state_dict = torch.load("src/weights/epoch=29-step=271169.ckpt", 
+        state_dict = torch.load(weight_path, 
                             map_location = torch.device('cpu')
                         )
         
